@@ -216,3 +216,38 @@ npx tauri build --bundles nsis     # 生成 release/bundle/nsis/music-player_0.1
 4. 只能删除本会话创建的文件，不动用户电脑其他文件（`src-tauri/resources/ffmpeg.exe`、`ffprobe.exe` 是用户文件，不得删，也未打包）
 5. 测试用 CDP 实测或"用户操作后查日志"，不要空口断言
 6. 不确定方向时先问清楚再动手
+
+---
+
+## 9. 磁盘使用红线（重要 · 用户多次强调）
+
+> 用户对"AI 往电脑上乱写文件/占空间"**零容忍**，曾因 `C:\rs-target`（16GB，cargo 缓存误写到 C 盘）强烈不满。**任何接手本项目的操作必须遵守本节。**
+
+### 9.1 永久禁止
+1. **禁止在任何系统位置（C 盘、D 盘根目录等）生成构建缓存**。`CARGO_TARGET_DIR` 已钉死在项目内 `src-tauri\target`（见 `start-dev.bat` 第 4 行 `set CARGO_TARGET_DIR=...`），**不得改动、不得取消**
+2. **禁止**修改用户电脑的其他文件、目录、注册表、系统设置、壁纸、桌面
+3. **禁止**未经明确同意进行安装/卸载/环境变量/注册表等系统级操作
+
+### 9.2 构建前必须检查
+1. 查看磁盘剩余空间：`Get-PSDrive D | Select Free`
+2. 查看 target 体积：`src-tauri\target`（debug+release 可达 3GB+）
+3. **空间不足时先清旧缓存再构建**：删 `src-tauri\target\debug` 和 `release`（纯编译缓存，可重建，重编约 1~2 分钟），**不要**直接扩大占用
+4. 注意：opencode 守护进程环境可能残留旧 `CARGO_TARGET_DIR`，跑 cargo 前用 `Remove-Item Env:CARGO_TARGET_DIR` 清掉，避免写回 C 盘
+
+### 9.3 清理记录（2026-08-15 第一次整理）
+| 项目 | 大小 | 处置 |
+|---|---|---|
+| `C:\rs-target`（误写 C 盘的 cargo 缓存） | 16.3GB | 已彻底删除，确认未再生 |
+| `src-tauri\target\debug` | 1.75GB | 已删除（可重建） |
+| `src-tauri\target\release` | 1.44GB | 已删除（可重建；注意其内含打包产物 bundle，删后需重打包） |
+| `Temp\opencode`（测试脚本） | 0.42GB | 已删除 |
+| `%LOCALAPPDATA%\tauri`（打包缓存） | 7MB | 已删除 |
+| `npm-cache`（`%LOCALAPPDATA%\npm-cache`） | 1.86GB | **未动**——创建于 2024-08-31，含用户历史包；本开发只新增 ~1MB 日志，整清会误删用户数据 |
+| 工具链 `.rustup` / `.cargo` / VS BuildTools | ~5GB | **保留**（编译必需，用户知情） |
+
+效果：D 盘可用空间 0.8GB → 3.61GB。
+
+### 9.4 用户私有文件（不可动）
+- `src-tauri/resources/ffmpeg.exe`、`ffprobe.exe`（各 ~98MB）：用户文件，**不得删除**，已加入 .gitignore 不入库，未打包进安装包
+- `%APPDATA%\com.musicplayer.app`（曲库 database + 封面缓存）：用户数据，删除会导致曲库丢失需重扫
+- 用户曲库目录（如 `D:\_Logs\MP3`）：只读使用，绝不写入
