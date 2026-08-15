@@ -1,0 +1,37 @@
+[package]
+name = "music-player"
+version = "0.1.0"
+description = "本地离线音乐播放器"
+authors = ["you"]
+edition = "2021"
+
+[lib]
+name = "music_player_lib"
+crate-type = ["rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["protocol-asset"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+lofty = "0.22"
+symphonia = { version = "0.5", features = ["mp3", "mp1", "mp2", "flac", "pcm", "vorbis", "ogg", "wav", "aiff", "isomp4", "aac"] }
+rusqlite = { version = "0.32", features = ["bundled"] }
+walkdir = "2"
+tauri-plugin-dialog = "2.7.2"
+encoding_rs = "0.8"
+
+[profile.dev]
+# 开发构建也开 O1：解码/扫描等 Rust 热路径运行快 3~5 倍，编译耗时基本可接受
+opt-level = 1
+# 不带调试符号：target 体积大幅缩小（省 ~1GB+），panic 栈回溯无行号
+debug = false
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true
+panic = "abort"

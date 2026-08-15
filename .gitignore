@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+src-tauri/target/
+src-tauri/gen/
+
+# logs
+dev.log
+dev-err.log
+
+# ffmpeg binaries (user-owned, not bundled in release)
+src-tauri/resources/ffmpeg.exe
+src-tauri/resources/ffprobe.exe
+
+# runtime data (user library, app-data db)
+*.db
+*.db-journal
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# editor
+.vscode/
+.idea/

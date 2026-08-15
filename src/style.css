@@ -1,0 +1,310 @@
+/* ===== 现代简洁主题 =====
+   深色 + 卡片层次 + 柔和阴影，适度圆角
+*/
+:root {
+  --bg: #121318;
+  --bg-2: #17181d;
+  --card: #1d1f26;
+  --card-2: #23262f;
+  --line: rgba(255, 255, 255, 0.07);
+  --text: #e6e8ee;
+  --text-dim: #8a8f9a;
+  --accent: #e8a33d;
+  --accent-strong: #f0b85a;
+  --accent-soft: rgba(232, 163, 61, 0.14);
+  --ok: #7ee8a1;
+  --danger: #e06c5a;
+  --radius: 10px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  font-family: "Segoe UI", "Microsoft YaHei", system-ui, sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  background: var(--bg);
+  user-select: none;
+  overflow: hidden;
+}
+
+/* ---- 按钮 ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid rgba(0, 0, 0, 0.55);
+  border-radius: var(--radius);
+  color: var(--text);
+  background: linear-gradient(180deg, #3a3f4b, #262a33 60%, #20242c);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 2px 4px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12.5px;
+  outline: none;
+  transition: background 0.12s, transform 0.05s;
+}
+.btn:hover {
+  background: linear-gradient(180deg, #454b59, #2e333e 60%, #272c35);
+}
+.btn:active {
+  background: #1a1c22;
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+.btn.primary {
+  background: linear-gradient(180deg, #ffd389, #e8a33d 55%, #cf8f2c);
+  color: #241a04;
+  border-color: rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+.btn.primary:hover {
+  filter: brightness(1.08);
+}
+.btn.primary:active {
+  box-shadow: inset 0 3px 8px rgba(120, 70, 0, 0.55);
+}
+.btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+  filter: none;
+}
+.btn.small {
+  height: 26px;
+  padding: 0 10px;
+  font-size: 11.5px;
+  border-radius: 8px;
+}
+.btn.danger {
+  color: #ff9b8a;
+}
+.btn.danger:hover {
+  background: linear-gradient(180deg, #4a2f2b, #33221f 60%, #2c1d1b);
+}
+
+/* ---- 输入框 ---- */
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid rgba(0, 0, 0, 0.55);
+  border-radius: 8px;
+  background: #1b1e24;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12.5px;
+  outline: none;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+.input:focus {
+  border-color: rgba(232, 163, 61, 0.6);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(232, 163, 61, 0.15);
+}
+
+/* ---- 弹层菜单项（右键菜单 / 加入歌单共用） ---- */
+.ctx-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 8px 14px;
+  border: none;
+  background: none;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+  text-align: left;
+}
+.ctx-item:hover {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+.ctx-item.danger:hover {
+  background: rgba(224, 108, 90, 0.18);
+  color: #ff9b8a;
+}
+.ctx-label {
+  padding: 6px 14px 3px;
+  font-size: 10.5px;
+  color: var(--text-dim);
+}
+
+/* ---- 圆形控制按钮 ---- */
+.disc-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 35% 30%, #4a5060, #2c3039 60%, #20242c);
+  color: var(--text);
+  font-size: 14px;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12), 0 3px 6px rgba(0, 0, 0, 0.45);
+  transition: background 0.12s, transform 0.05s;
+}
+.disc-btn:hover {
+  background: radial-gradient(circle at 35% 30%, #525a6c, #333947 60%, #262a33);
+}
+.disc-btn:active {
+  transform: scale(0.94);
+  box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.6);
+}
+.disc-btn.main {
+  width: 48px;
+  height: 48px;
+  font-size: 17px;
+  background: radial-gradient(circle at 35% 30%, #ffd389, #e8a33d 55%, #c8872a);
+  color: #241a04;
+  border-color: rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.5), 0 3px 7px rgba(0, 0, 0, 0.45);
+}
+.disc-btn.main:hover {
+  filter: brightness(1.08);
+}
+.disc-btn.main:active {
+  box-shadow: inset 0 3px 9px rgba(120, 70, 0, 0.6);
+}
+
+/* ---- 卡片面板 ---- */
+.card {
+  background: linear-gradient(180deg, #232630, #1d1f26 60%, #191b21);
+  border: 1px solid rgba(0, 0, 0, 0.45);
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* ---- 进度条 / 滑块 ---- */
+.track-groove {
+  height: 10px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #0c0d11, #2a2d36);
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.55), inset 0 -1px 1px rgba(255, 255, 255, 0.06);
+  position: relative;
+  cursor: pointer;
+  overflow: visible;
+}
+.track-fill {
+  position: absolute;
+  left: 0;
+  top: 1px;
+  bottom: 1px;
+  border-radius: 5px;
+  background: linear-gradient(180deg, #f7c46b, #e8a33d 55%, #c8872a);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.35), 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+.track-fill::after {
+  content: "";
+  position: absolute;
+  right: -9px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  z-index: 3;
+  background: linear-gradient(180deg, #ffffff 0%, #dfe2e8 45%, #b6bcc8 100%);
+  border: 1px solid rgba(0, 0, 0, 0.45);
+  box-shadow: inset 0 -2px 3px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+.track-fill::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  top: 2px;
+  height: 45%;
+  border-radius: 50%;
+  z-index: 4;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0));
+}
+
+/* ---- 滚动条 ---- */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #34373f;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f434d;
+}
+
+.group-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  overflow-y: auto;
+}
+.group-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #454a54 0%, #353942 100%);
+  border-top: 1px solid #565c68;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 1px 2px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: filter 0.12s;
+}
+.group-item:hover {
+  filter: brightness(1.12);
+}
+.group-name {
+  font-weight: 600;
+  color: #f2d9a8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.group-count {
+  font-size: 12px;
+  color: #a9a49a;
+  flex-shrink: 0;
+}
+.group-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 10px 12px;
+}
+.group-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f2d9a8;
+}
+.disc-btn.small {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.disc-btn.small.main {
+  width: 36px;
+  height: 36px;
+}
